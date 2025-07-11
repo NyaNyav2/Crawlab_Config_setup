@@ -1,0 +1,19 @@
+# worker node
+version: '3.3'
+services:
+  worker:
+    build:
+      context: . # Dấu chấm đại diện cho thư mục hiện tại
+      dockerfile: Dockerfile
+      args:
+        CRAWLAB_BASE_IMAGE: crawlabteam/crawlab
+    # image: crawlabteam/crawlab
+    container_name: crawlab_worker
+    restart: always
+    environment:
+      CRAWLAB_NODE_MASTER: "N"  # N: worker node
+      CRAWLAB_GRPC_ADDRESS: "30.30.30.104:9666"  # grpc address
+      CRAWLAB_FS_FILER_URL: "http://30.30.30.104:8080/api/filer"  # seaweedfs api
+    volumes:
+      - "/opt/.crawlab/worker:/root/.crawlab"  # persistent crawlab metadata
+      - "/opt/crawlab/worker:/data"  # persistent crawlab data

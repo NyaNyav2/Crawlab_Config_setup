@@ -1,0 +1,25 @@
+# master node with external mongo
+version: '3.3'
+services:
+  master:
+    image: crawlabteam/crawlab
+    container_name: crawlab_master
+    restart: always
+    environment:
+      CRAWLAB_NODE_MASTER: "Y"  # Y: master node
+      CRAWLAB_MONGO_URI: "mongodb+srv://uanh6484:wvqKUlnRvLipSIfE@crawlab.piiwy7c.mongodb.net/?retryWrites=true&w=majority&appName=Crawlab"  # mongo uri (set this alone)
+      #CRAWLAB_MONGO_HOST: "0.0.0.0/0"  # mongo host address
+      # CRAWLAB_MONGO_PORT: "<mongo_port>"  # mongo port 
+      CRAWLAB_MONGO_DB: "Spider"  # mongo database 
+      CRAWLAB_MONGO_USERNAME: "uanh6484"  # mongo username
+      CRAWLAB_MONGO_PASSWORD: "wvqKUlnRvLipSIfE"  # mongo password 
+      CRAWLAB_MONGO_AUTHSOURCE: "admin"  # mongo auth source 
+      # CRAWLAB_MONGO_AUTHMECHANISM: "<mongo_auth_mechanism>"  # mongo auth mechanism 
+      # CRAWLAB_MONGO_AUTHMECHANISMPROPERTIES: "<mongo_auth_mechanism_properties>"  # mongo auth mechanism properties
+    volumes:
+      - "/opt/.crawlab/master:/root/.crawlab"  # persistent crawlab metadata
+      - "/opt/crawlab/master:/data"  # persistent crawlab data
+      - "/var/crawlab/log:/var/log/crawlab" # log persistent 
+    ports:
+      - "8080:8080"  # exposed api port
+      - "9666:9666"  # exposed grpc port

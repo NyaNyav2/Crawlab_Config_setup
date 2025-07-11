@@ -1,0 +1,19 @@
+# docker-compose.worker_bs4.yml
+version: '3.3'
+services:
+  worker_bs4:
+    build:
+      context: .  # <--- THAY ĐỔI Ở ĐÂY: trỏ đến thư mục hiện tại (worker 2)
+      dockerfile: Dockerfile # Đảm bảo tên file Dockerfile là chính xác
+                            # (nếu Dockerfile của bạn tên là "Dockerfile" thì dòng này là đúng)
+      args:
+        CRAWLAB_BASE_IMAGE: crawlabteam/crawlab # Hoặc image base bạn dùng
+    container_name: crawlab_worker_bs4
+    restart: always
+    environment:
+      CRAWLAB_NODE_MASTER: "N"
+      CRAWLAB_GRPC_ADDRESS: "30.30.30.104:9666"
+      CRAWLAB_FS_FILER_URL: "http://30.30.30.104:8080/api/filer"
+    volumes:
+      - "/opt/.crawlab/worker_bs4:/root/.crawlab"
+      - "/opt/crawlab/worker_bs4:/data"
